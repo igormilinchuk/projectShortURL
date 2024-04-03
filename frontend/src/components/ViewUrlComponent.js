@@ -12,7 +12,6 @@ const ViewUrlComponent = () => {
   useEffect(() => {
     const fetchUrls = async () => {
       try {
-        // Отримання усіх скорочених URL з сервера
         const result = await axios.get(`${DOMAIN_URL}/all`);
         setUrls(result.data);
       } catch (error) {
