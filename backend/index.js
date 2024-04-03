@@ -21,13 +21,10 @@ const connectDB = async () => {
 };
 connectDB();
 
-// Функція для перевірки та видалення неактивних посилань за закінченням терміну дії
 const checkAndDeleteExpiredUrls = async () => {
   try {
-    // Отримати всі посилання з закінченням часу менше поточного часу
     const expiredUrls = await Url.find({ expiryDate: { $lte: new Date() } });
 
-    // Видалити всі знайдені неактивні посилання
     await Url.deleteMany({ expiryDate: { $lte: new Date() } });
 
     console.log(`${expiredUrls.length} expired URLs have been deleted.`);
@@ -37,13 +34,10 @@ const checkAndDeleteExpiredUrls = async () => {
 };
 
 
-// Почати перевірку і видалення застарілих URL при старті сервера
 checkAndDeleteExpiredUrls();
 
-// Регулярно запускати функцію checkAndDeleteExpiredUrls, наприклад, кожні 24 години
 setInterval(checkAndDeleteExpiredUrls, 60 * 1000);
 
-// Отримати всі збережені URL
 app.get("/all", async (req, res, next) => {
   try {
     const data = await Url.find().exec();
@@ -57,8 +51,7 @@ app.post("/short", async (req, res) => {
   const { origUrl, customShortUrl, expiryDate } = req.body;
 
   const base = "http://localhost:3333";
-  
-  // Встановлюємо дефолтний час (1 хвилина) якщо користувач не вказав expiryDate
+
   const defaultExpiryDate = new Date();
   defaultExpiryDate.setMinutes(defaultExpiryDate.getMinutes() + 1);
 
@@ -74,12 +67,11 @@ app.post("/short", async (req, res) => {
         origUrl,
         shortUrl,
         urlId,
-        expiryDate: expiryDate || defaultExpiryDate, // Встановлення дефолтного значення
+        expiryDate: expiryDate || defaultExpiryDate, 
       });
 
       await url.save();
 
-      // Відправляємо посилання зі збереженим expiryDate на фронтенд
       return res.json(url);
     }
   } catch (error) {
@@ -88,7 +80,6 @@ app.post("/short", async (req, res) => {
   }
 });
 
-// Запит на отримання кількості переходів за коротким посиланням
 app.get("/clicks/:shortUrl", async (req, res) => {
   const { shortUrl } = req.params;
   try {
@@ -104,11 +95,9 @@ app.get("/clicks/:shortUrl", async (req, res) => {
   }
 });
 
-// Запит на перенаправлення за коротким посиланням
 app.get("/:shortUrl", async (req, res) => {
   const { shortUrl } = req.params;
   try {
-    // Очистимо параметри запиту, якщо вони є
     const cleanShortUrl = shortUrl.split('?')[0];
     const url = await Url.findOneAndUpdate(
       { urlId: cleanShortUrl },
