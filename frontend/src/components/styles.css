@@ -1,0 +1,57 @@
+/* styles.css */
+
+.container {
+  background-color: #f0f0f0; /* Світло-сірий фон */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.shortenerBox,
+.viewShortenedBox {
+  background-color: #fff; /* Білий фон */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тінь */
+  width: 500px; /* Фіксована ширина */
+  margin-bottom: 20px; /* Доданий відступ між блоками */
+}
+
+.header {
+  margin-bottom: 16px;
+  font-size: 2rem;
+  color: #333; /* Темно-сірий текст */
+  text-align: center;
+}
+
+.inputGroup {
+  margin-bottom: 16px;
+}
+
+.inputField {
+  width: calc(100% - 16px); /* Ширина з урахуванням внутрішнього padding */
+  padding: 8px;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc; /* Світло-сірий бордюр */
+  border-radius: 4px;
+}
+
+.generateButton,
+.submitButton {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  color: #fff; /* Білий текст */
+  background-color: #007bff; /* Синій фон кнопки */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.generateButton:hover,
+.submitButton:hover {
+  background-color: #0056b3; /* Темно-синій фон при наведенні */
+}
