@@ -14,13 +14,11 @@ const AddUrlComponent = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    // Перевірка наявності URL
     if (!url.trim()) {
       alert("Будь ласка, введіть URL.");
       return;
     }
 
-    // Перевірка формату дати
     const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
     if (expiryDate && !expiryDate.match(dateRegex)) {
       alert("Будь ласка, введіть правильну дату закінчення у форматі YYYY-MM-DDTHH:MM.");
@@ -36,13 +34,11 @@ const AddUrlComponent = () => {
     }
 
     try {
-      // Відправка запиту на сервер для скорочення URL
       const response = await axios.post(`${DOMAIN_URL}/short`, {
         origUrl: url,
         customShortUrl: customShortUrl.trim() || null,
         expiryDate: expiryDate || null,
       });
-      // Встановлення скороченого URL та очищення полів вводу
       setShortUrl(response.data.shortUrl);
       setUrl("");
       setCustomShortUrl("");
@@ -53,7 +49,6 @@ const AddUrlComponent = () => {
   };
 
   const generateRandomUrl = () => {
-    // Генерація випадкового короткого URL
     const possibleChars =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let randomUrl = "";
@@ -62,7 +57,6 @@ const AddUrlComponent = () => {
         Math.floor(Math.random() * possibleChars.length)
       );
     }
-    // Встановлення випадкового короткого URL
     setCustomShortUrl(randomUrl);
   };
 
